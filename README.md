@@ -17,7 +17,8 @@ Dự án này cung cấp mã nguồn Google Apps Script để kết nối Zalo B
 ### 1. Chuẩn bị Google Sheet
 - Tạo một Google Sheet mới.
 - **Cột A:** Nhập các từ khóa tìm kiếm.
-- **Cột B:** Nhập câu trả lời tương ứng.
+- **Cột B:** Nhập câu trả lời (văn bản) tương ứng.
+- **Cột C (Tuỳ chọn):** Nhập đường dẫn hình ảnh (URL của ảnh kết thúc bằng `.jpg`, `.png`, v.v.). Zalo Bot sẽ tự động gửi kèm hình ảnh này cùng câu trả lời.
 
 ### 2. Thiết lập Google Apps Script
 - Trong Google Sheet, chọn **Extensions (Tiện ích mở rộng) > Apps Script**.

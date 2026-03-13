@@ -36,7 +36,11 @@ function doPost(e) {
       const answer = findAnswer(userText);
       
       if (answer) {
-        sendMessage(chatId, answer);
+        if (answer.photo) {
+          sendPhoto(chatId, answer.photo, answer.text);
+        } else {
+          sendMessage(chatId, answer.text);
+        }
       } else {
         // Reply if no keyword found
         sendMessage(chatId, "Tin nhắn của bạn: '" + userText + "'. Tôi chưa tìm thấy câu trả lời phù hợp trong Google Sheet, bạn có thể kiểm tra lại từ khóa nhé!");
@@ -85,15 +89,17 @@ function findAnswer(query) {
   // Start from second row (skip header)
   for (let i = 1; i < data.length; i++) {
     const rawKeyword = data[i][0];
-    const answer = data[i][1];
+    const answerText = data[i][1];
+    const answerPhoto = data[i][2] ? data[i][2].toString().trim() : '';
     
-    if (!rawKeyword || !answer) continue;
+    if (!rawKeyword || !answerText) continue;
 
     const normKeyword = normalizeString(rawKeyword);
+    const currentAnswer = { text: answerText.toString(), photo: answerPhoto };
     
     // Exact match after normalization wins immediately
     if (normKeyword === normQuery) {
-      return answer.toString();
+      return currentAnswer;
     }
     
     // Check if the whole normalized keyword is in the query (substring match)
@@ -102,7 +108,7 @@ function findAnswer(query) {
       const score = normKeyword.split(' ').length * 10;
       if (score > highestScore) {
         highestScore = score;
-        bestMatch = answer.toString();
+        bestMatch = currentAnswer;
       }
       continue;
     }
@@ -124,7 +130,7 @@ function findAnswer(query) {
     
     if (matchRatio >= 0.5 && score > highestScore) {
       highestScore = score;
-      bestMatch = answer.toString();
+      bestMatch = currentAnswer;
     }
   }
   
@@ -169,7 +175,34 @@ function sendMessage(chatId, text) {
   };
   
   const response = UrlFetchApp.fetch(url, options);
-  console.log('Zalo API Response:', response.getContentText());
+  console.log('Zalo API Response (Text):', response.getContentText());
+  return response;
+}
+
+/**
+ * Sends a photo message back to Zalo
+ */
+function sendPhoto(chatId, photoUrl, caption) {
+  const url = `${API_BASE_URL}/sendPhoto`;
+  const payload = {
+    chat_id: chatId,
+    photo: photoUrl
+  };
+  
+  if (caption) {
+    // Zalo limits caption up to 2000 characters
+    payload.caption = caption.length > 2000 ? caption.substring(0, 1997) + "..." : caption;
+  }
+  
+  const options = {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  };
+  
+  const response = UrlFetchApp.fetch(url, options);
+  console.log('Zalo API Response (Photo):', response.getContentText());
   return response;
 }
 
