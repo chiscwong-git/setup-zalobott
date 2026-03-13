@@ -29,6 +29,9 @@ function doPost(e) {
       const chatId = message.chat.id;
       const userText = message.text;
       
+      // Hiển thị trạng thái "đang soạn tin nhắn"
+      sendChatAction(chatId, 'typing');
+      
       // Find answer from Google Sheet
       const answer = findAnswer(userText);
       
@@ -126,6 +129,26 @@ function findAnswer(query) {
   }
   
   return bestMatch;
+}
+
+/**
+ * Sends a chat action (like 'typing') to Zalo
+ */
+function sendChatAction(chatId, action) {
+  const url = `${API_BASE_URL}/sendChatAction`;
+  const payload = {
+    chat_id: chatId,
+    action: action
+  };
+  
+  const options = {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  };
+  
+  UrlFetchApp.fetch(url, options);
 }
 
 /**
