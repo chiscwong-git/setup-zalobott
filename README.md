@@ -34,6 +34,7 @@ Dự án này cung cấp mã nguồn Google Apps Script để kết nối Zalo B
 ### 4. Kết nối Webhook
 - Trong file `code.gs`, tìm hàm `setWebhook`.
 - Thay thế `YOUR_WEB_APP_URL_HERE` bằng URL bạn vừa copy ở bước trên.
+- Thay thế `SECRET_TOKEN_HERE` bằng **Secret Token** bạn tạo trong Zalo Bot Creator.
 - Chọn hàm `setWebhook` ở trình đơn thả xuống trên thanh công cụ và nhấn **Run (Chạy)**.
 - Khi thấy thông báo `ok: true` là bạn đã kết nối thành công.
 
