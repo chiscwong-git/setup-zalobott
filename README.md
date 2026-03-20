@@ -23,7 +23,7 @@ Dự án này cung cấp mã nguồn Google Apps Script để kết nối Zalo B
 ### 2. Thiết lập Google Apps Script
 - Trong Google Sheet, chọn **Extensions (Tiện ích mở rộng) > Apps Script**.
 - Copy nội dung file `code.gs` và dán vào trình biên tập Apps Script.
-- Thay thế `YOUR_BOT_TOKEN_HERE` bằng **Bot Token** bạn nhận được từ Zalo Bot Creator.
+- Thay thế `YOUR_BOT_TOKEN_HERE` bằng **Bot Token** bạn nhận được từ Zalo Bot Creator(dòng 16).
 
 ### 3. Triển khai (Deploy)
 - Nhấn **Deploy > New deployment**.
@@ -34,7 +34,8 @@ Dự án này cung cấp mã nguồn Google Apps Script để kết nối Zalo B
 
 ### 4. Kết nối Webhook
 - Trong file `code.gs`, tìm hàm `setWebhook`.
-- Thay thế `YOUR_WEB_APP_URL_HERE` bằng URL bạn vừa copy ở bước trên.
+- Thay thế `YOUR_WEB_APP_URL_HERE` bằng URL bạn vừa copy ở bước trên(dòng 220).
+- Thay thế `SECRET_TOKEN_HERE` bằng **Secret Token** bạn tạo trong Zalo Bot Creator(dòng 225).
 - Chọn hàm `setWebhook` ở trình đơn thả xuống trên thanh công cụ và nhấn **Run (Chạy)**.
 - Khi thấy thông báo `ok: true` là bạn đã kết nối thành công.
 
@@ -54,7 +55,7 @@ Dự án tích hợp khả năng tự động đọc dữ liệu doanh thù hàn
 3. Sao chép dãy ID này và dán vào cột B của sheet **Config**.
 
 ### Thiết lập gửi hàng ngày
-- Điền `GOOGLE_AI_KEY` (Gemini API Key) vào đầu file `code.gs`.
+- Điền `API_AI_KEY` (dòng 18) vào đầu file `code.gs`.
 - Vào mục **Trình kích hoạt (Triggers)** trong Apps Script.
 - Tạo một Trigger mới cho hàm `runBaoCaoChuoi` chạy theo thời gian (ví dụ: hàng ngày lúc 22h-23h).
 
