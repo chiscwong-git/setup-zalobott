@@ -35,9 +35,28 @@ Dự án này cung cấp mã nguồn Google Apps Script để kết nối Zalo B
 ### 4. Kết nối Webhook
 - Trong file `code.gs`, tìm hàm `setWebhook`.
 - Thay thế `YOUR_WEB_APP_URL_HERE` bằng URL bạn vừa copy ở bước trên.
-- Thay thế `SECRET_TOKEN_HERE` bằng **Secret Token** bạn tạo trong Zalo Bot Creator.
 - Chọn hàm `setWebhook` ở trình đơn thả xuống trên thanh công cụ và nhấn **Run (Chạy)**.
 - Khi thấy thông báo `ok: true` là bạn đã kết nối thành công.
+
+## Tính năng Báo cáo Kinh doanh AI
+Dự án tích hợp khả năng tự động đọc dữ liệu doanh thù hàng ngày, phân tích bằng AI Gemini và gửi báo cáo định kỳ cho các quản lý cơ sở.
+
+### Cấu hình Sheet `Config`
+Để chạy báo cáo chuỗi, bạn cần tạo một sheet tên là **Config** với cấu trúc:
+- **Cột A:** Tên cơ sở (Khớp với sheet dữ liệu).
+- **Cột B:** Zalo User ID của quản lý (Có thể điền nhiều ID cách nhau bởi dấu phẩy).
+- **Cột C:** (Bỏ trống hoặc ghi chú).
+- **Cột D:** Link Google Sheet con của cơ sở đó (chứa sheet `Export_AI`).
+
+### Cách lấy Zalo User ID đơn giản
+1. Triển khai code và nhắn tin bất kỳ cho Bot (mà từ khoá chưa có trong Sheet).
+2. Bot sẽ tự động trả lời kèm theo dòng: **"💡 [DÀNH CHO QUẢN LÝ] Zalo User ID của bạn là: ..."**
+3. Sao chép dãy ID này và dán vào cột B của sheet **Config**.
+
+### Thiết lập gửi hàng ngày
+- Điền `GOOGLE_AI_KEY` (Gemini API Key) vào đầu file `code.gs`.
+- Vào mục **Trình kích hoạt (Triggers)** trong Apps Script.
+- Tạo một Trigger mới cho hàm `runBaoCaoChuoi` chạy theo thời gian (ví dụ: hàng ngày lúc 22h-23h).
 
 ## Cấu trúc thư mục
 
